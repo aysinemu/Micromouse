@@ -310,8 +310,8 @@ int main(void)
 //	  forward(); //670 = 18cm
 //	  turn_right(); //320 = 90 degree
 //	  turn_left(); //300
-	float t = 5.73;
-	float t1 = 5.87;
+	float t = 5.74;
+	float t1 = 5.86;
 	float t2 = 6;
 	float ss = 1.5;
 	float ss1 = 0.3;
@@ -326,14 +326,14 @@ int main(void)
 			forward();
 		}
 
-		else if ( front_sensor > t2 && left_sensor >= t-ss && left_sensor <= t1+ss+6 && right_sensor >= t-ss ){
-			if (front_sensor < t2+8 && left_sensor >= t-ss && left_sensor <= t1+ss+6 && right_sensor >= t-ss ){
+		else if ( front_sensor > t2 && left_sensor >= t-ss && left_sensor <= t1+ss+8 && right_sensor >= t-ss ){
+			if (front_sensor < t2+7 && left_sensor >= t-ss && left_sensor <= t1+ss+8 && right_sensor >= t-ss ){
 				way_1_right();
 			}else{
 //				forward();
 			}
-		}else if ( front_sensor > t2 && left_sensor >= t-ss && right_sensor >= t-ss && right_sensor <= t1+ss+6 ){
-			if (front_sensor < t2+8 && left_sensor >= t-ss && right_sensor >= t-ss && right_sensor <= t1+ss+6 ){
+		}else if ( front_sensor > t2 && left_sensor >= t-ss && right_sensor >= t-ss && right_sensor <= t1+ss+8 ){
+			if (front_sensor < t2+7 && left_sensor >= t-ss && right_sensor >= t-ss && right_sensor <= t1+ss+8 ){
 				way_1_left();
 			}else{
 //				forward();
@@ -370,19 +370,19 @@ int main(void)
 }
 void way_1_left(){
 	forward();
-	HAL_Delay(800);
+	HAL_Delay(770);
 	turn_left90();
-	HAL_Delay(300);
+	HAL_Delay(310);
 	forward();
-	HAL_Delay(800);
+	HAL_Delay(770);
 }
 void way_1_right(){
 	forward();
-	HAL_Delay(800);
+	HAL_Delay(770);
 	turn_right90();
-	HAL_Delay(300);
+	HAL_Delay(310);
 	forward();
-	HAL_Delay(800);
+	HAL_Delay(770);
 }
 void turn_180(){
 	turn_right90();
@@ -426,7 +426,7 @@ void turn_left(){
 }
 void turn_right_nolag(){
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,3000); //left
-	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,2100); // right
+	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,1850); // right
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
     HAL_GPIO_WritePin(AI2_GPIO_Port, AI2_Pin,SET);
 	HAL_GPIO_WritePin(AI1_GPIO_Port, AI1_Pin,RESET);
@@ -434,7 +434,7 @@ void turn_right_nolag(){
 	HAL_GPIO_WritePin(BI1_GPIO_Port, BI1_Pin,RESET);
 }
 void turn_left_nolag(){
-	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,2100); //left
+	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,1850); //left
 	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,3000); // right
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
 	HAL_GPIO_WritePin(AI2_GPIO_Port, AI2_Pin,SET);
