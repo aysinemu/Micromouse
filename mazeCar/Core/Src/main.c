@@ -310,14 +310,16 @@ int main(void)
 //	  forward(); //670 = 18cm
 //	  turn_right(); //320 = 90 degree
 //	  turn_left(); //300
-	float t = 5.74;
-	float t1 = 5.86;
+	float t = 5.736;
+	float t1 = 5.864;
 	float t2 = 6;
 	float ss = 1.5;
-	float ss1 = 0.3;
-	if (left_sensor < t && right_sensor > t1 && front_sensor > t2){
+	float ss1 = 0.2;
+	if (left_sensor < t && right_sensor > t1 && front_sensor > t2
+		&& left_sensor > t-ss1 && right_sensor > t1+ss1){
 		turn_right_nolag();
-	}else if (right_sensor < t && left_sensor > t1 && front_sensor > t2){
+	}else if (right_sensor < t && left_sensor > t1 && front_sensor > t2
+			  && right_sensor > t-ss1 && left_sensor > t1+ss1){
 		turn_left_nolag();
 	}else{
 		if (front_sensor < t2 && left_sensor >= t-ss && left_sensor <= t1+ss && right_sensor >= t-ss && right_sensor <= t1+ss ){
@@ -326,14 +328,14 @@ int main(void)
 			forward();
 		}
 
-		else if ( front_sensor > t2 && left_sensor >= t-ss && left_sensor <= t1+ss+8 && right_sensor >= t-ss ){
-			if (front_sensor < t2+7 && left_sensor >= t-ss && left_sensor <= t1+ss+8 && right_sensor >= t-ss ){
+		else if ( front_sensor > t2 && left_sensor >= t-ss+0.8 && left_sensor <= t1+ss+9 && right_sensor >= t ){
+			if (front_sensor < t2+7.7 && left_sensor >= t-ss+0.8 && left_sensor <= t1+ss+9 && right_sensor >= t ){
 				way_1_right();
 			}else{
 //				forward();
 			}
-		}else if ( front_sensor > t2 && left_sensor >= t-ss && right_sensor >= t-ss && right_sensor <= t1+ss+8 ){
-			if (front_sensor < t2+7 && left_sensor >= t-ss && right_sensor >= t-ss && right_sensor <= t1+ss+8 ){
+		}else if ( front_sensor > t2 && left_sensor >= t && right_sensor >= t-ss+0.8 && right_sensor <= t1+ss+9 ){
+			if (front_sensor < t2+7.7 && left_sensor >= t && right_sensor >= t-ss+0.8 && right_sensor <= t1+ss+9 ){
 				way_1_left();
 			}else{
 //				forward();
@@ -368,21 +370,33 @@ int main(void)
   }
   /* USER CODE END 3 */
 }
+void bam_right(){
+	float t = 5.736;
+	if (right_sensor < t){
+		turn_right();
+	}
+}
+void bam_left(){
+	float t = 5.736;
+	if (left_sensor < t){
+		turn_left();
+	}
+}
 void way_1_left(){
 	forward();
-	HAL_Delay(770);
+	HAL_Delay(700);
 	turn_left90();
-	HAL_Delay(310);
+	HAL_Delay(300);
 	forward();
-	HAL_Delay(770);
+	HAL_Delay(700);
 }
 void way_1_right(){
 	forward();
-	HAL_Delay(770);
+	HAL_Delay(680);
 	turn_right90();
-	HAL_Delay(310);
+	HAL_Delay(380);
 	forward();
-	HAL_Delay(770);
+	HAL_Delay(700);
 }
 void turn_180(){
 	turn_right90();
@@ -390,7 +404,7 @@ void turn_180(){
 }
 void forward(){
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,3000); //left
-	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,3150); // right
+	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,3320); // right
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
 	HAL_GPIO_WritePin(AI2_GPIO_Port, AI2_Pin,SET);
 	HAL_GPIO_WritePin(AI1_GPIO_Port, AI1_Pin,RESET);
@@ -426,7 +440,7 @@ void turn_left(){
 }
 void turn_right_nolag(){
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,3000); //left
-	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,1850); // right
+	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,1580); // right
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
     HAL_GPIO_WritePin(AI2_GPIO_Port, AI2_Pin,SET);
 	HAL_GPIO_WritePin(AI1_GPIO_Port, AI1_Pin,RESET);
@@ -434,7 +448,7 @@ void turn_right_nolag(){
 	HAL_GPIO_WritePin(BI1_GPIO_Port, BI1_Pin,RESET);
 }
 void turn_left_nolag(){
-	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,1850); //left
+	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,1580); //left
 	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,3000); // right
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
 	HAL_GPIO_WritePin(AI2_GPIO_Port, AI2_Pin,SET);
