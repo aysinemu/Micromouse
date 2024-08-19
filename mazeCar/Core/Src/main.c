@@ -310,76 +310,77 @@ int main(void)
 //	  forward(); //670 = 18cm
 //	  turn_right(); //320 = 90 degree
 //	  turn_left(); //300
-	float t = 5.66;
-	float t1 = 5.94;
+	float t = 5.73;
+	float t1 = 5.87;
 	float t2 = 6;
-	float ss = 1;
-	if (left_sensor < t && right_sensor > t1  && front_sensor > t2){
-		turn_right();
+	float ss = 1.5;
+	float ss1 = 0.3;
+	if (left_sensor < t && right_sensor > t1 && front_sensor > t2){
+		turn_right_nolag();
 	}else if (right_sensor < t && left_sensor > t1 && front_sensor > t2){
-		turn_left();
+		turn_left_nolag();
 	}else{
 		if (front_sensor < t2 && left_sensor >= t-ss && left_sensor <= t1+ss && right_sensor >= t-ss && right_sensor <= t1+ss ){
 			turn_right90();
-			HAL_Delay(470); //180 degree
+			HAL_Delay(420); //180 degree
 		}else if ( front_sensor > t2 && left_sensor >= t-ss && left_sensor <= t1+ss && right_sensor >= t-ss && right_sensor <= t1+ss ){
 			forward();
 		}
 
-		else if ( front_sensor > t2 && left_sensor >= t-ss && left_sensor <= t1+ss+6 && right_sensor >= t-ss ){
-			if (front_sensor < t2+8 && left_sensor >= t-ss && left_sensor <= t1+ss+6 && right_sensor >= t-ss ){
-				forward();
-				HAL_Delay(140);
-				turn_right90();
-				HAL_Delay(230);
-				forward();
-				HAL_Delay(140);
-			}else{
+//		else if ( front_sensor > t2 && left_sensor >= t-ss && left_sensor <= t1+ss+6 && right_sensor >= t-ss ){
+//			if (front_sensor < t2+8 && left_sensor >= t-ss && left_sensor <= t1+ss+6 && right_sensor >= t-ss ){
 //				forward();
-			}
-		}else if ( front_sensor > t2 && left_sensor >= t-ss && right_sensor >= t-ss && right_sensor <= t1+ss+6 ){
-			if (front_sensor < t2+8 && left_sensor >= t-ss && right_sensor >= t-ss && right_sensor <= t1+ss+6 ){
-				forward();
-				HAL_Delay(140);
-				turn_left90();
-				HAL_Delay(230);
-				forward();
-				HAL_Delay(140);
-			}else{
+//				HAL_Delay(140);
+//				turn_right90();
+//				HAL_Delay(230);
 //				forward();
-			}
-		}else if(front_sensor < t2+6 && left_sensor >= t+6 && right_sensor >= t+6 ){
-			forward();
-			HAL_Delay(50);
-			turn_left90();
-			HAL_Delay(230);
-		}else if(front_sensor > t2+10 && left_sensor >= t+10 && right_sensor >= t-ss && right_sensor <= t1+ss+8 ){
-			forward();
-			HAL_Delay(100);
-			turn_left90();
-			HAL_Delay(230);
-		}else if(front_sensor > t2+10 && right_sensor >= t+10 && left_sensor >= t-ss && left_sensor <= t1+ss+8 ){
-			forward();
-			HAL_Delay(100);
-			turn_right90();
-			HAL_Delay(230);
-		}else if(front_sensor > t2+10 && right_sensor >= t+10 && left_sensor >= t+10 ){
-			forward();
-			HAL_Delay(100);
-			turn_right90();
-			HAL_Delay(230);
-		}
+//				HAL_Delay(140);
+//			}else{
+////				forward();
+//			}
+//		}else if ( front_sensor > t2 && left_sensor >= t-ss && right_sensor >= t-ss && right_sensor <= t1+ss+6 ){
+//			if (front_sensor < t2+8 && left_sensor >= t-ss && right_sensor >= t-ss && right_sensor <= t1+ss+6 ){
+//				forward();
+//				HAL_Delay(140);
+//				turn_left90();
+//				HAL_Delay(230);
+//				forward();
+//				HAL_Delay(140);
+//			}else{
+////				forward();
+//			}
+//		}else if(front_sensor < t2+6 && left_sensor >= t+6 && right_sensor >= t+6 ){
+//			forward();
+//			HAL_Delay(50);
+//			turn_left90();
+//			HAL_Delay(230);
+//		}else if(front_sensor > t2+10 && left_sensor >= t+10 && right_sensor >= t-ss && right_sensor <= t1+ss+8 ){
+//			forward();
+//			HAL_Delay(100);
+//			turn_left90();
+//			HAL_Delay(230);
+//		}else if(front_sensor > t2+10 && right_sensor >= t+10 && left_sensor >= t-ss && left_sensor <= t1+ss+8 ){
+//			forward();
+//			HAL_Delay(100);
+//			turn_right90();
+//			HAL_Delay(230);
+//		}else if(front_sensor > t2+10 && right_sensor >= t+10 && left_sensor >= t+10 ){
+//			forward();
+//			HAL_Delay(100);
+//			turn_right90();
+//			HAL_Delay(230);
+//		}
 
 		else{
-			stop();
+//			stop();
 		}
 	}
   }
   /* USER CODE END 3 */
 }
 void forward(){
-	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,5000); //left
-	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,5150); // right
+	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,3000); //left
+	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,3150); // right
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
 	HAL_GPIO_WritePin(AI2_GPIO_Port, AI2_Pin,SET);
 	HAL_GPIO_WritePin(AI1_GPIO_Port, AI1_Pin,RESET);
@@ -396,8 +397,8 @@ void backward(){
 	HAL_GPIO_WritePin(BI1_GPIO_Port, BI1_Pin,SET);
 }
 void turn_right(){
-	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,2000); //left
-	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,2000); // right
+	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,1600); //left
+	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,1400); // right
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
     HAL_GPIO_WritePin(AI2_GPIO_Port, AI2_Pin,SET);
 	HAL_GPIO_WritePin(AI1_GPIO_Port, AI1_Pin,RESET);
@@ -405,11 +406,29 @@ void turn_right(){
 	HAL_GPIO_WritePin(BI1_GPIO_Port, BI1_Pin,SET);
 }
 void turn_left(){
-	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,2000); //left
-	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,2000); // right
+	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,1400); //left
+	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,1600); // right
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
 	HAL_GPIO_WritePin(AI2_GPIO_Port, AI2_Pin,RESET);
 	HAL_GPIO_WritePin(AI1_GPIO_Port, AI1_Pin,SET);
+	HAL_GPIO_WritePin(BI2_GPIO_Port, BI2_Pin,SET);
+	HAL_GPIO_WritePin(BI1_GPIO_Port, BI1_Pin,RESET);
+}
+void turn_right_nolag(){
+	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,3000); //left
+	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,2000); // right
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
+    HAL_GPIO_WritePin(AI2_GPIO_Port, AI2_Pin,SET);
+	HAL_GPIO_WritePin(AI1_GPIO_Port, AI1_Pin,RESET);
+	HAL_GPIO_WritePin(BI2_GPIO_Port, BI2_Pin,SET);
+	HAL_GPIO_WritePin(BI1_GPIO_Port, BI1_Pin,RESET);
+}
+void turn_left_nolag(){
+	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,2000); //left
+	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,3000); // right
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
+	HAL_GPIO_WritePin(AI2_GPIO_Port, AI2_Pin,SET);
+	HAL_GPIO_WritePin(AI1_GPIO_Port, AI1_Pin,RESET);
 	HAL_GPIO_WritePin(BI2_GPIO_Port, BI2_Pin,SET);
 	HAL_GPIO_WritePin(BI1_GPIO_Port, BI1_Pin,RESET);
 }
