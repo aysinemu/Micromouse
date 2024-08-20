@@ -81,7 +81,7 @@ int16_t right_wheel = 0;
 uint32_t counterTim3 = 0;
 int16_t countTim3 = 0;
 int16_t left_wheel = 0;
-
+int arr[6][5] = { 0 };
 int speed =0;
 
 /* USER CODE END PV */
@@ -160,6 +160,11 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
         // Process count for TIM3
     }
 }
+void markPath(int x, int y) {
+    if(x >= 0 && x < 6 && y >= 0 && y < 5) {
+        arr[x][y] = 1;
+    }
+}
 /* USER CODE END 0 */
 
 /**
@@ -219,7 +224,9 @@ int main(void)
 //  HAL_GPIO_WritePin(AI1_GPIO_Port, AI1_Pin,RESET);
 //  HAL_GPIO_WritePin(BI2_GPIO_Port, BI2_Pin,SET);
 //  HAL_GPIO_WritePin(BI1_GPIO_Port, BI1_Pin,RESET);
-
+  int startX = 5;
+  int startY = 0;
+  markPath(x, y);
   while (1)
   {
     /* USER CODE END WHILE */
@@ -313,8 +320,8 @@ int main(void)
 	float t = 5.736;
 	float t1 = 5.864;
 	float t2 = 6;
-	float ss = 1.5;
-	float ss1 = 0.2;
+	float ss = 1.1;
+	float ss1 = 0.17;
 	if (left_sensor < t && right_sensor > t1 && front_sensor > t2
 		&& left_sensor > t-ss1 && right_sensor > t1+ss1){
 		turn_right_nolag();
@@ -328,14 +335,14 @@ int main(void)
 			forward();
 		}
 
-		else if ( front_sensor > t2 && left_sensor >= t-ss+0.8 && left_sensor <= t1+ss+9 && right_sensor >= t ){
-			if (front_sensor < t2+7.7 && left_sensor >= t-ss+0.8 && left_sensor <= t1+ss+9 && right_sensor >= t ){
+		else if ( front_sensor > t2 && left_sensor >= t-ss+0.7 && left_sensor <= t1+ss+7 && right_sensor >= t ){
+			if (front_sensor < t2+7.7 && left_sensor >= t-ss+0.7 && left_sensor <= t1+ss+7 && right_sensor >= t ){
 				way_1_right();
 			}else{
 //				forward();
 			}
-		}else if ( front_sensor > t2 && left_sensor >= t && right_sensor >= t-ss+0.8 && right_sensor <= t1+ss+9 ){
-			if (front_sensor < t2+7.7 && left_sensor >= t && right_sensor >= t-ss+0.8 && right_sensor <= t1+ss+9 ){
+		}else if ( front_sensor > t2 && left_sensor >= t && right_sensor >= t-ss+1 && right_sensor <= t1+ss+10 ){
+			if (front_sensor < t2+7.7 && left_sensor >= t && right_sensor >= t-ss+1 && right_sensor <= t1+ss+10 ){
 				way_1_left();
 			}else{
 //				forward();
@@ -384,7 +391,7 @@ void bam_left(){
 }
 void way_1_left(){
 	forward();
-	HAL_Delay(700);
+	HAL_Delay(810);
 	turn_left90();
 	HAL_Delay(300);
 	forward();
@@ -392,7 +399,7 @@ void way_1_left(){
 }
 void way_1_right(){
 	forward();
-	HAL_Delay(680);
+	HAL_Delay(750);
 	turn_right90();
 	HAL_Delay(380);
 	forward();
@@ -400,11 +407,11 @@ void way_1_right(){
 }
 void turn_180(){
 	turn_right90();
-	HAL_Delay(630); //180 degree
+	HAL_Delay(740); //180 degree
 }
 void forward(){
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,3000); //left
-	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,3320); // right
+	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,3220); // right
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
 	HAL_GPIO_WritePin(AI2_GPIO_Port, AI2_Pin,SET);
 	HAL_GPIO_WritePin(AI1_GPIO_Port, AI1_Pin,RESET);
