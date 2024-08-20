@@ -1,0 +1,11 @@
+../Core/Src/TB6612_driver.c:36:6:motorcontroller_init	2
+../Core/Src/TB6612_driver.c:54:6:update_motor_controller	4
+../Core/Src/TB6612_driver.c:75:6:update_speed	2
+../Core/Src/TB6612_driver.c:85:6:update_position	2
+../Core/Src/TB6612_driver.c:95:6:dir_motor	2
+../Core/Src/TB6612_driver.c:109:6:pwm_motor	1
+../Core/Src/TB6612_driver.c:116:6:print_motor_controller	9
+../Core/Src/TB6612_driver.c:158:9:set_mode_controller	5
+../Core/Src/TB6612_driver.c:178:9:set_controller	4
+../Core/Src/TB6612_driver.c:195:9:set_gains_motor_controller	10
+../Core/Src/TB6612_driver.c:231:9:motorcontroller_init_gpio	1
