@@ -99,88 +99,88 @@ void forward(){
 		left = distanceLeft();
 		right = distanceRight();
 		straight = distanceStraight();
-
-//		if(counterWheel == 0){
-//			rightWheel = countTim2;
-//			leftWheel = countTim3;
-//		}
-//		else if(counterWheel == 300){
-//			if(countTim2 - rightWheel < 2 && countTim3 - leftWheel < 2){
-//				if(left < right){
-//					backwardLeft();
-//
-//					HAL_Delay(50);
-//					forwardGPIO();
-//					flag = 0;
-//				}
-//				else{
-//					backwardRight();
-//					HAL_Delay(50);
-//
-//					forwardGPIO();
-//					flag = 0;
-//				}
-//			}
-//			counterWheel = 0;
-//		}
-//		counterWheel ++;
-
-		if(straight < 5.5) {
-			stop();
-			return;
-		}
-		if(left < 5.2){
-
-			timer_Left(5);
-			flag = 0;
-		}
-		else if( right < 5.2){
-			timer_Right(5);
-			flag = 0;
-		}
-		else if(left > 5.6 && left < 12 && right > 5.6 && right < 12){
-			if(left < right){
-				timer_Left(10);
-				flag = 0;
+	    static int last_left_encoder_count = 0;
+	    static int last_right_encoder_count = 0;
+	    int current_left_encoder_count = countTim3;
+	    int current_right_encoder_count = countTim2;
+	    int lap = 0;
+		if (current_left_encoder_count == last_left_encoder_count && current_right_encoder_count == last_right_encoder_count) {
+			if (left - right > 2.5){
+				backwardLeft();
+				HAL_Delay(30);
+				forwardGPIO();
+				lap++;
+			}else {
+				backwardRight();
+				HAL_Delay(30);
+				forwardGPIO();
+				lap++;
 			}
-			else {
-				timer_Right(10);
-				flag = 0;
-			}
-		}
-
-		else if(left > 12 && right > 5.6 && right < 12){
-			timer_Left(5);
-			flag = 0;
-
-		}
-		else if(right > 12 && left > 5.6 && left < 12){
-			timer_Right(5);
-			flag = 0;
-		}
+    	}
 		else{
-			HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-			HAL_GPIO_WritePin(LED5_GPIO_Port, LED5_Pin, RESET);
-			HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, RESET);
-			if(((countTim2 - lastTim2_Right) -(countTim3 - lastTim3_Left)) > 3){
+			last_left_encoder_count = current_left_encoder_count;
+        	last_right_encoder_count = current_right_encoder_count;
+
+			if(straight < 5) {
+				stop();
+				return;
+			}
+			if(left < 5.2){
+
 				timer_Left(5);
 				flag = 0;
 			}
-			else if(((countTim3 - lastTim3_Left) - (countTim2 - lastTim2_Right) ) > 3){
+			else if( right < 5.2){
 				timer_Right(5);
 				flag = 0;
 			}
-		}
-		if(flag == 0){
-			flag = 1;
-			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,timerLeft); //left
-			__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,timerRight); // right
+			else if(left > 5.6 && left < 12 && right > 5.6 && right < 12){
+				if(left < right){
+					timer_Left(20);
+					flag = 0;
+				}
+				else {
+					timer_Right(20);
+					flag = 0;
+				}
+			}
+
+			else if(left > 12 && right > 5.6 && right < 12){
+				timer_Left(5);
+				flag = 0;
+
+			}
+			else if(right > 12 && left > 5.6 && left < 12){
+				timer_Right(5);
+				flag = 0;
+			}
+			else{
+				HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+				HAL_GPIO_WritePin(LED5_GPIO_Port, LED5_Pin, RESET);
+				HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, RESET);
+				if(((countTim2 - lastTim2_Right) -(countTim3 - lastTim3_Left)) > 3){
+					timer_Left(5);
+					flag = 0;
+				}
+				else if(((countTim3 - lastTim3_Left) - (countTim2 - lastTim2_Right) ) > 3){
+					timer_Right(5);
+					flag = 0;
+				}
+			}
+			if(flag == 0){
+				flag = 1;
+				__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,timerLeft); //left
+				__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3,timerRight); // right
+			}
 		}
 	}
 }
 
 
 void backwardRight(){
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
+	HAL_GPIO_WritePin(AI2_GPIO_Port, AI2_Pin,RESET);
+	HAL_GPIO_WritePin(AI1_GPIO_Port, AI1_Pin,RESET);
 	HAL_GPIO_WritePin(BI2_GPIO_Port, BI2_Pin,RESET);
 	HAL_GPIO_WritePin(BI1_GPIO_Port, BI1_Pin,SET);
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,0); //left
@@ -188,6 +188,8 @@ void backwardRight(){
 
 }
 void backwardLeft(){
+	HAL_GPIO_WritePin(AI2_GPIO_Port, BI2_Pin,RESET);
+	HAL_GPIO_WritePin(AI1_GPIO_Port, BI1_Pin,RESET);
 	HAL_GPIO_WritePin(BI2_GPIO_Port, AI2_Pin,RESET);
 	HAL_GPIO_WritePin(BI1_GPIO_Port, AI1_Pin,SET);
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,3000); //left

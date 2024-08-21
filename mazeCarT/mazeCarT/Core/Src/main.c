@@ -350,7 +350,7 @@ int main(void)
 //		  }
 //	  }
 
-	  	  if(distance_straight > 5.5){
+	  	  if(distance_straight > 5){
 	  		  if(flag == 0){
 	  				forward();
 	  			    flag = 1;
@@ -360,7 +360,7 @@ int main(void)
 	  		  flag = 0;
 	  		  if(distance_left > 12 && distance_right > 12){
 	  			  turn_right();
-	  			  angle(-86);
+	  			  angle(-83);
 	  			  stop();
 	  		  }
 //	  		  else if(distance_left > 12 && distance_right < 10){
@@ -376,23 +376,23 @@ int main(void)
 	  		  else if(distance_left < 10 && distance_right < 10){
 				  if(distance_right < distance_left){
 					  turn_left();
-					  angle(172);
+					  angle(170);
 					  stop();
 				  }
 				  else{
 					  turn_right();
-					  angle(-172);
+					  angle(-170);
 					  stop();
 				  }
 	  		  }
 	  		  else if(distance_left - distance_right > 0){
 	  			  turn_left();
-	  			  angle(84);
+	  			  angle(80);
 	  			  stop();
 	  		  }
 	  		  else if (distance_right - distance_left > 0){
 	  			  turn_right();
-	  			  angle(-84);
+	  			  angle(-80);
 	  			  stop();
 	  		  }
 	  		  else{
