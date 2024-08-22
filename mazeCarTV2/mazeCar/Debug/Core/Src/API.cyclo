@@ -1,0 +1,9 @@
+../Core/Src/API.c:49:6:timer_Right	3
+../Core/Src/API.c:61:6:timer_Left	3
+../Core/Src/API.c:74:6:forwardGPIO	1
+../Core/Src/API.c:182:6:API_moveForward	22
+../Core/Src/API.c:268:6:backwardRight	1
+../Core/Src/API.c:278:6:backwardLeft	1
+../Core/Src/API.c:286:6:API_turnRight	1
+../Core/Src/API.c:297:6:API_turnLeft	1
+../Core/Src/API.c:309:6:stop	1
