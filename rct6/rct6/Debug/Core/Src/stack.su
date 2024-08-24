@@ -1,0 +1,7 @@
+../Core/Src/stack.c:3:6:initializeStack	16	static
+../Core/Src/stack.c:7:6:isEmptyStack	16	static
+../Core/Src/stack.c:11:6:isFullStack	16	static
+../Core/Src/stack.c:15:6:pushStack	32	static
+../Core/Src/stack.c:22:7:popStack	40	static
+../Core/Src/stack.c:30:7:peekStack	40	static
+../Core/Src/stack.c:37:5:sizeStack	16	static
