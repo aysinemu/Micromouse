@@ -1,0 +1,11 @@
+../Core/Src/API.c:53:6:timer_Right	16	static
+../Core/Src/API.c:65:6:timer_Left	16	static
+../Core/Src/API.c:78:6:forwardGPIO	8	static
+../Core/Src/API.c:91:6:API_moveForward	40	static
+../Core/Src/API.c:228:6:backwardRight	8	static
+../Core/Src/API.c:238:6:backwardLeft	8	static
+../Core/Src/API.c:246:6:API_turnRight	48	static
+../Core/Src/API.c:299:6:API_turnLeft	48	static
+../Core/Src/API.c:348:6:API_turnRight180	48	static
+../Core/Src/API.c:400:6:API_turnLeft180	48	static
+../Core/Src/API.c:451:6:stop	8	static

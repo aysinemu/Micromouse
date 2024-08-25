@@ -1,0 +1,7 @@
+../Core/Src/queue.c:4:6:initializeQueue	16	static
+../Core/Src/queue.c:10:6:isEmptyQueue	16	static
+../Core/Src/queue.c:14:6:isFullQueue	16	static
+../Core/Src/queue.c:18:6:pushQueue	32	static
+../Core/Src/queue.c:27:6:popQueue	16	static
+../Core/Src/queue.c:35:7:peekQueue	40	static
+../Core/Src/queue.c:45:5:sizeQueue	16	static
