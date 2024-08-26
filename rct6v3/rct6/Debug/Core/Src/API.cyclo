@@ -1,0 +1,13 @@
+../Core/Src/API.c:62:6:timer_Right	3
+../Core/Src/API.c:74:6:timer_Left	3
+../Core/Src/API.c:87:6:forwardGPIO	1
+../Core/Src/API.c:100:6:Update_Encoder_Value	2
+../Core/Src/API.c:108:9:Calculate_Average_Encoder	2
+../Core/Src/API.c:116:6:API_moveForward	39
+../Core/Src/API.c:274:6:backwardRight	1
+../Core/Src/API.c:284:6:backwardLeft	1
+../Core/Src/API.c:292:6:API_turnRight	12
+../Core/Src/API.c:345:6:API_turnLeft	12
+../Core/Src/API.c:394:6:API_turnRight180	12
+../Core/Src/API.c:446:6:API_turnLeft180	12
+../Core/Src/API.c:497:6:stop	1
