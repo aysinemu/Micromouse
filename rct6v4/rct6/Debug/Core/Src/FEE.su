@@ -1,0 +1,5 @@
+../Core/Src/FEE.c:13:19:FEE_Write	1104	static
+../Core/Src/FEE.c:50:6:FEE_Read	32	static
+../Core/Src/FEE.c:59:6:FEE_WriteData	56	dynamic
+../Core/Src/FEE.c:66:6:FEE_ReadData	56	dynamic
+../Core/Src/FEE.c:72:9:FEE_ClearPage	48	static
